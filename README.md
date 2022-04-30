@@ -59,9 +59,11 @@ newgrp docker
  -test setting like this
 docker run hello-world 
 
-2. in vs code add these lines only ip of rpi works
+    - https://devblogs.microsoft.com/iotdev/easily-build-and-debug-iot-edge-modules-on-your-remote-device-with-azure-iot-edge-for-vs-code-1-9-0/
+    https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04
+2. in vs code user settings from command line pallet add these lines only ip of rpi works for some reason do not try name
     "azure-iot-edge.executor.env": {
-        "DOCKER_HOST": "ssh://pi@192.168.2.73"
+        "DOCKER_HOST": "ssh://pi@192.168.2.75"
     },
 
 
@@ -71,3 +73,5 @@ sudo nano /etc/sysctl.conf
     - uncomment line below
 net.ipv4.ip_forward=1
 sudo systemctl restart docker
+ If there are errors with pulling local image from local repository in devcontainer.json uncomment:
+ "forwardPorts": [5000, 5001],
