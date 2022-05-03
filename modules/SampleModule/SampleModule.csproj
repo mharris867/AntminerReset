@@ -27,5 +27,8 @@
     <Content Include="SoftReset.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>  
+    <Content Include="PSCreds_.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>  
   </ItemGroup>
 </Project>
