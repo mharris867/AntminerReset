@@ -58,7 +58,7 @@ namespace SampleModule
         /// This method is called whenever the module is sent a message from the EdgeHub. 
         /// It just pipe the messages without any change.
         /// It prints all the incoming messages.
-        /// </summary>
+        /// </summary> 
         static async Task<MessageResponse> PipeMessage(Message message, object userContext)
         {
             int counterValue = Interlocked.Increment(ref counter);
@@ -71,7 +71,7 @@ namespace SampleModule
 
             byte[] messageBytes = message.GetBytes();
             string messageString = Encoding.UTF8.GetString(messageBytes);
-            Console.WriteLine($"Received message: {counterValue}, Body: [{messageString}]");
+            Console.WriteLine($"Received message: {counterValue}, Body: [{messageString}] Version 0.0.2");
 
             if (!string.IsNullOrEmpty(messageString))
             {
@@ -83,7 +83,7 @@ namespace SampleModule
                     }
                     await moduleClient.SendEventAsync("output1", pipeMessage);
                 
-                    Console.WriteLine("Received message sent");
+                    Console.WriteLine("Received message sent Version: 0.0.2");
                 }
             }
             return MessageResponse.Completed;

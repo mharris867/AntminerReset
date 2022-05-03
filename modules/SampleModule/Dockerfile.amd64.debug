@@ -1,11 +1,11 @@
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim AS base
 
 RUN apt-get update && \
-    apt install wget -y && \
-    wget --auth-no-challenge --retry-connrefused --continue --tries=100 "https://github.com/PowerShell/PowerShell/releases/download/v7.2.3/powershell-7.2.3-linux-arm32.tar.gz" && \
-    mkdir ~/powershell && \
-    tar -xvf ./powershell-7.2.2-linux-arm32.tar.gz -C ~/powershell && \
-    ~/powershell/pwsh -command 'New-Item -ItemType SymbolicLink -Path "/usr/bin/pwsh" -Target "$PSHOME/pwsh" -Force' && \
+    curl -L -o /tmp/powershell.tar.gz "https://github.com/PowerShell/PowerShell/releases/download/v7.2.3/powershell-7.2.3-linux-x64.tar.gz" && \
+    mkdir -p /opt/microsoft/powershell/7 && \
+    tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7 && \
+    chmod +x /opt/microsoft/powershell/7/pwsh && \
+    ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh && \
     apt-get install -y --no-install-recommends unzip procps && \
     rm -rf /var/lib/apt/lists/*
 

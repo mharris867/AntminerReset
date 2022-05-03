@@ -75,3 +75,12 @@ net.ipv4.ip_forward=1
 sudo systemctl restart docker
  If there are errors with pulling local image from local repository in devcontainer.json uncomment:
  "forwardPorts": [5000, 5001],
+4. Nuget restore throws errors so trying this dns setting to see if it helps (IT WORKS!)
+    - https://docs.microsoft.com/en-us/azure/iot-edge/troubleshoot-common-errors?view=iotedge-2020-11#edge-agent-module-reports-empty-config-file-and-no-modules-start-on-the-device
+{
+    "dns": ["1.1.1.1"]
+}
+
+    - in /etc/docker/daemon.json file
+    - Then:
+sudo systemctl restart docker
