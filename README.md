@@ -84,3 +84,6 @@ sudo systemctl restart docker
     - in /etc/docker/daemon.json file
     - Then:
 sudo systemctl restart docker
+
+1. running powershell from c#
+https://docs.microsoft.com/en-us/powershell/scripting/developer/hosting/windows-powershell-host-quickstart?view=powershell-7.2 
