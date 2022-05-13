@@ -87,3 +87,6 @@ sudo systemctl restart docker
 
 1. running powershell from c#
 https://docs.microsoft.com/en-us/powershell/scripting/developer/hosting/windows-powershell-host-quickstart?view=powershell-7.2 
+
+1. Pushing to the Docker Registry had credential issues. Had to set docker login on both dev and build systems before I could push to docker hub. Still dont know if this is what actually made it work:
+docker -u mharris867 -p password (on both dev and build)

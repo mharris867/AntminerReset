@@ -2,7 +2,7 @@
     "$schema-version": "0.0.1",
     "description": "",
     "image": {
-        "repository": "localhost:5000/samplemodule",
+        "repository": "mharris867/antminerresetmodule",
         "tag": {
             "version": "0.0.2",
             "platforms": {

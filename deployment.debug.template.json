@@ -51,13 +51,13 @@
           }
         },
         "modules": {
-          "SampleModule": {
+          "AntminerResetModule": {
             "version": "1.0",
             "type": "docker",
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "${MODULES.SampleModule.debug}",
+              "image": "${MODULES.AntminerResetModule.debug}",
               "createOptions": {}
             }
           },
@@ -78,8 +78,8 @@
       "properties.desired": {
         "schemaVersion": "1.1",
         "routes": {
-          "SampleModuleToIoTHub": "FROM /messages/modules/SampleModule/outputs/* INTO $upstream",
-          "sensorToSampleModule": "FROM /messages/modules/SimulatedTemperatureSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\"/modules/SampleModule/inputs/input1\")"
+          "AntminerResetModuleToIoTHub": "FROM /messages/modules/AntminerResetModule/outputs/* INTO $upstream",
+          "sensorToAntminerResetModule": "FROM /messages/modules/SimulatedTemperatureSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\"/modules/AntminerResetModule/inputs/input1\")"
         },
         "storeAndForwardConfiguration": {
           "timeToLiveSecs": 7200

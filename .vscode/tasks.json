@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/modules/SampleModule/SampleModule.csproj",
+                "${workspaceFolder}/modules/AntminerResetModule/AntminerResetModule.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/modules/SampleModule/SampleModule.csproj",
+                "${workspaceFolder}/modules/AntminerResetModule/AntminerResetModule.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/modules/SampleModule/SampleModule.csproj"
+                "${workspaceFolder}/modules/AntminerResetModule/AntminerResetModule.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim-arm32v7 AS base
 
 RUN apt-get update && \
-    curl -L -o /tmp/powershell.tar.gz "https://github.com/PowerShell/PowerShell/releases/download/v7.2.3/powershell-7.2.3-linux-x64.tar.gz" && \
+    curl -L -o /tmp/powershell.tar.gz "https://github.com/PowerShell/PowerShell/releases/download/v7.2.3/powershell-7.2.3-linux-arm32.tar.gz" && \
     mkdir -p /opt/microsoft/powershell/7 && \
     tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7 && \
     chmod +x /opt/microsoft/powershell/7/pwsh && \
@@ -13,7 +13,7 @@ RUN useradd -ms /bin/bash moduleuser
 USER moduleuser
 RUN curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l ~/vsdbg
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster-arm32v7 AS build-env
 WORKDIR /app
 
 COPY *.csproj ./
@@ -26,4 +26,4 @@ FROM base
 WORKDIR /app
 COPY --from=build-env /app/out ./
 
-ENTRYPOINT ["dotnet", "SampleModule.dll"]
+ENTRYPOINT ["dotnet", "AntminerResetModule.dll"]
