@@ -55,7 +55,7 @@ namespace AntminerResetModule
             // Run Powershell
             //PowerShell ps = PowerShell.Create();
             //ps.AddArgument()
-            PowerShell.Create().AddScript("D:\\PSScripts\\MyScript.ps1").Invoke();
+            PowerShell.Create().AddScript(@"SoftReset.ps1").AddArgument("-noninteractive").Invoke();
             
         }
 
