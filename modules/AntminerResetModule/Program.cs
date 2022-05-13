@@ -10,6 +10,7 @@ namespace AntminerResetModule
     using System.Threading.Tasks;
     using Microsoft.Azure.Devices.Client;
     using Microsoft.Azure.Devices.Client.Transport.Mqtt;
+    using System.Diagnostics;
 
     class Program
     {
@@ -55,7 +56,7 @@ namespace AntminerResetModule
             // Run Powershell
             //PowerShell ps = PowerShell.Create();
             //ps.AddArgument()
-            //PowerShell.Create().AddScript(@"SoftReset.ps1").AddArgument("-noninteractive").Invoke();
+            Process.Start("pwsh", "SoftReset.ps1 -noninteractive");
             
         }
 
