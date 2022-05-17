@@ -98,3 +98,9 @@ docker -u mharris867 -p password (on both dev and build)
 1. Building a github runner out of my raspberry pi...
 - https://github.com/mharris867/AntminerReset/settings/actions/runners/new?arch=arm
 - Configure runner service https://docs.github.com/en/actions/hosting-your-own-runners/configuring-the-self-hosted-runner-application-as-a-service
+2. Installed powershell to rpi
+curl -L -o /tmp/powershell.tar.gz "https://github.com/PowerShell/PowerShell/releases/download/v7.2.3/powershell-7.2.3-linux-arm32.tar.gz"
+sudo mkdir -p /opt/microsoft/powershell/7 
+sudo tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
+sudo chmod +x /opt/microsoft/powershell/7/pwsh
+sudo ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
