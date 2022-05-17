@@ -1,0 +1,24 @@
+name: Build IoT Edge Module
+
+on:
+  push:
+    branches:
+     - master
+     - develop
+     - projectrename
+
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: List directory
+      run: dir
+    - name: Build IoT Edge Solution
+      run: docker build  --rm -f "./AntminerReset/AntminerReset/modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:0.0.3-arm32v7.debug "./AntminerReset/AntminerReset/modules/AntminerResetModule"
+
