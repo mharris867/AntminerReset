@@ -26,6 +26,16 @@ jobs:
         $PWord = ConvertTo-SecureString -String "${env:PWORD}" -AsPlainText -Force
         $creds = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
         $creds | Export-CliXml -Path "./modules/AntminerResetModule/PSCreds_.xml"
+    - name: Set Version number
+      shell: pwsh
+      run: |
+        $MajorVersion = 1
+        $MinorVersion = 0
+        $SpanFromY2K = New-TimeSpan -Start (Get-Date "1/1/2000 12:00 AM") -End (Get-Date)
+        $SubMajor = $SpanFromY2K.Days
+        $CurrDay = New-TimeSpan -Start (Get-Date -Hour 0 -Minute 00 -Second 00) -End (Get-Date)
+        [int]$SubMinor = $CurrDay.TotalSeconds / 2
+        Add-Content -Path $env:GITHUB_ENV -Value "VERSION_INFO=$MajorVersion.$MinorVersion.$SubMajor.$SubMinor"
     - name: Build IoT Edge Solution
-      run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:0.0.3-arm32v7.debug "./modules/AntminerResetModule"
+      run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:${{ env.VERSION_INFO }}-arm32v7.debug "./modules/AntminerResetModule"
 
