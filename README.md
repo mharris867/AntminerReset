@@ -80,6 +80,10 @@ sudo systemctl restart docker
 {
     "dns": ["1.1.1.1"]
 }
+#trying
+{
+    "dns": ["My.network.router.ipaddress"]
+}
 
     - in /etc/docker/daemon.json file
     - Then:
