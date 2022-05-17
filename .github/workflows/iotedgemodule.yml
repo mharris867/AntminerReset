@@ -20,12 +20,12 @@ jobs:
     - name: Create Credential File
       env:
         PWORD: ${{ secrets.PWORD }}
-      run: pwsh """
-                $User = "root"
-                $PWord = ConvertTo-SecureString -String "${env:PWORD}" -AsPlainText -Force
-                $creds = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
-                $creds | Export-CliXml -Path "./modules/AntminerResetModule/PSCreds_.xml
-                """"
+      shell: pwsh
+      run: |
+        $User = "root"
+        $PWord = ConvertTo-SecureString -String "${env:PWORD}" -AsPlainText -Force
+        $creds = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
+        $creds | Export-CliXml -Path "./modules/AntminerResetModule/PSCreds_.xml
     - name: Build IoT Edge Solution
       run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:0.0.3-arm32v7.debug "./modules/AntminerResetModule"
 
