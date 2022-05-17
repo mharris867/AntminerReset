@@ -38,7 +38,7 @@ jobs:
         Add-Content -Path $env:GITHUB_ENV -Value "VERSION_INFO=$MajorVersion.$MinorVersion.$SubMajor.$SubMinor"
         $module = (get-content ./modules/AntminerResetModule/module.json | ConvertFrom-Json)
         $module.image.tag.version = "$MajorVersion.$MinorVersion.$SubMajor.$SubMinor"
-        $module | ConvertTo-Json -Depth 1000 | set-content ./modules/AntminerResetModule/module.json
+        $module | ConvertTo-Json -Depth 100 | set-content ./modules/AntminerResetModule/module.json
         Write-Host "VERSION_INFO and module.json are set to tag: $MajorVersion.$MinorVersion.$SubMajor.$SubMinor"
     - name: Build IoT Edge Solution
       run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:${{ env.VERSION_INFO }}-arm32v7.debug "./modules/AntminerResetModule"
