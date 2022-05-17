@@ -77,7 +77,7 @@ namespace AntminerResetModule
 
             byte[] messageBytes = message.GetBytes();
             string messageString = Encoding.UTF8.GetString(messageBytes);
-            Console.WriteLine($"Received message: {counterValue}, Body: [{messageString}] Version 0.0.2");
+            Console.WriteLine($"Received message: {counterValue}, Body: [{messageString}] Version 0.0.3");
 
             if (!string.IsNullOrEmpty(messageString))
             {
@@ -89,7 +89,7 @@ namespace AntminerResetModule
                     }
                     await moduleClient.SendEventAsync("output1", pipeMessage);
 
-                    Console.WriteLine("Received message sent Version: 0.0.2");
+                    Console.WriteLine("Received message sent Version: 0.0.3");
                 }
             }
             return MessageResponse.Completed;
