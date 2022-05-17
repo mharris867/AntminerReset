@@ -18,5 +18,5 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build IoT Edge Solution
-      run: docker build  --rm -f "AntminerReset/modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:0.0.3-arm32v7.debug "AntminerReset/modules/AntminerResetModule"
+      run: docker build  --rm -f "/AntminerReset/AntminerReset/modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:0.0.3-arm32v7.debug "/AntminerReset/AntminerReset/modules/AntminerResetModule"
 
