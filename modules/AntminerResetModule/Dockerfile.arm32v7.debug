@@ -26,5 +26,4 @@ FROM base
 WORKDIR /app
 COPY --from=build-env /app/out ./
 
-CMD pwsh ./SoftReset.ps1 -noninteractive
-ENTRYPOINT ["dotnet", "SampleModule.dll"]
+ENTRYPOINT ["dotnet", "AntminerResetModule.dll"]
