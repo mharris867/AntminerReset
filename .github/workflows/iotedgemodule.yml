@@ -35,11 +35,16 @@ jobs:
         $SubMajor = $SpanFromY2K.Days
         $CurrDay = New-TimeSpan -Start (Get-Date -Hour 0 -Minute 00 -Second 00) -End (Get-Date)
         [int]$SubMinor = $CurrDay.TotalSeconds / 2
-        Add-Content -Path $env:GITHUB_ENV -Value "VERSION_INFO=$MajorVersion.$MinorVersion.$SubMajor.$SubMinor"
+        if ($env:GIT_BRANCH -Like '*master*') {Add-Content -Path $env:GITHUB_ENV -Value "VERSION_INFO=$MajorVersion.$MinorVersion.$SubMajor.$SubMinor"}
+        else {
+        $prereleasesuffix = $env:GIT_BRANCH.Substring($env:GIT_BRANCH.LastIndexOf("/") + 1).Replace("_", "-").Replace(".", "-")
+        $prereleasesuffix = $prereleasesuffix.Substring(0, [System.Math]::Min(19, $prereleasesuffix.Length))
+        Add-Content -Path $env:GITHUB_ENV -Value "VERSION_INFO=$MajorVersion.$MinorVersion.$SubMajor.$SubMinor-$prereleasesuffix"
+        }
         $module = (get-content ./modules/AntminerResetModule/module.json | ConvertFrom-Json)
         $module.image.tag.version = "$MajorVersion.$MinorVersion.$SubMajor.$SubMinor"
         $module | ConvertTo-Json -Depth 100 | set-content ./modules/AntminerResetModule/module.json
-        Write-Host "VERSION_INFO and module.json are set to tag: $MajorVersion.$MinorVersion.$SubMajor.$SubMinor"
+        Write-Host "Version Set To: $MajorVersion.$MinorVersion.$SubMajor.$SubMinor"
     - name: Build IoT Edge Solution
       run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:${{ env.VERSION_INFO }}-arm32v7.debug "./modules/AntminerResetModule"
 
