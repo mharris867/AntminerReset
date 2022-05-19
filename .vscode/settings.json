@@ -1,6 +1,17 @@
 {
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "azure-iot-edge.EdgeModuleCACertificateFile": "/var/lib/iotedgehubdev/certs/edge-device-ca/cert/edge-device-ca.cert.pem",
+    "azure.resourceFilter": null,
+    "terminal.integrated.defaultProfile.linux": "pwsh",
+    "azure-iot-edge.executor.env": {
+
+        "DOCKER_HOST": "ssh://pi@rpi4iotedge.mcp"
+    },
+    "explorer.confirmDelete": false,
     "azure-iot-edge.defaultPlatform": {
         "platform": "arm32v7",
         "alias": null
-    }
+    },
 }
