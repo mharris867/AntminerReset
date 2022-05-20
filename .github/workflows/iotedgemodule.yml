@@ -46,6 +46,7 @@ jobs:
         $module | ConvertTo-Json -Depth 100 | set-content ./modules/AntminerResetModule/module.json
         Write-Host "Version Set To: $MajorVersion.$MinorVersion.$SubMajor.$SubMinor"
     - name: Build IoT Edge Solution
+      # docker build  --rm -f "/home/mark/Documents/git/MagicMirrorIoTEdge/modules/MagicMirrorModule/Dockerfile.arm64v8.debug" -t localhost:5000/magicmirrormodule:0.0.1-arm64v8.debug "/home/mark/Documents/git/MagicMirrorIoTEdge/modules/MagicMirrorModule" && docker push localhost:5000/magicmirrormodule:0.0.1-arm64v8.debug
       run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:${{ env.VERSION_INFO }}-arm32v7.debug "./modules/AntminerResetModule"
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
