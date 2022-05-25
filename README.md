@@ -104,3 +104,9 @@ sudo mkdir -p /opt/microsoft/powershell/7
 sudo tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
 sudo chmod +x /opt/microsoft/powershell/7/pwsh
 sudo ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
+
+1. so after searching for a while on how to generate the module deployment config from a template I found https://github.com/Azure/iotedgedev/ . Normally I think it is run in a container and drops the output config file all translated and stuff, I assume that is what happens when your right click a deployment template from vscode and select generate manifest but I can not find a image for my raspberry pi. It looks like I need the manual-dev-machine-setup. So on the raspberry pi github actions runner:
+sudo apt install python3-pip
+sudo pip install -U iotedgedev
+-now I can run something like:
+iotedgedev genconfig -f ./deployment.debug.template.json -P arm32v7 --fail-on-validation-error
