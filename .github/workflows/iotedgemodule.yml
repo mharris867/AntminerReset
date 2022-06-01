@@ -26,9 +26,13 @@ jobs:
         $PWord = ConvertTo-SecureString -String "${env:PWORD}" -AsPlainText -Force
         $creds = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
         $creds | Export-CliXml -Path "./modules/AntminerResetModule/PSCreds_.xml"
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.13
+      with:
+        versionSpec: '5.x'
     - name: Determine Version
       id:   gitversion
-      uses: GitTools/actions@v0.9.13
+      uses: gittools/actions/gitversion/execute@v0.9.13
     - name: Display GitVersion outputs
       run: |
         echo "Major: ${{ steps.gitversion.outputs.major }}"
