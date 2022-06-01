@@ -40,6 +40,7 @@ While ($loopforever) {
         Invoke-RestMethod http://$antminerIP/cgi-bin/set_miner_conf.cgi  -Credential $creds -AllowUnencryptedAuthentication -Method "POST" -Body $body -ContentType "application/x-www-form-urlencoded; charset=UTF-8" 
         Write-Host "$(Get-Date) Slow hash rate detected. Restarted Antminer" -ForegroundColor DarkRed 
     }
-    Write-Host "$(Get-Date) Sleeping for 15min" -ForegroundColor DarkGreen 
+    if (Test-Path AntminerResetModule.dll) { $ModuleVersionInfo = "Version: " + (Get-Item AntminerResetModule.dll).VersionInfo.FileVersion }
+    Write-Host "$(Get-Date) Antminer Reset Module $ModuleVersionInfo Sleeping for 15min" -ForegroundColor DarkGreen 
     Start-Sleep -Seconds 900
 }

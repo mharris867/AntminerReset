@@ -51,23 +51,13 @@
           }
         },
         "modules": {
-          "SampleModule": {
+          "AntminerResetModule": {
             "version": "1.0",
             "type": "docker",
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "${MODULES.SampleModule.debug}",
-              "createOptions": {}
-            }
-          },
-          "SimulatedTemperatureSensor": {
-            "version": "1.0",
-            "type": "docker",
-            "status": "running",
-            "restartPolicy": "always",
-            "settings": {
-              "image": "mcr.microsoft.com/azureiotedge-simulated-temperature-sensor:1.0",
+              "image": "${MODULES.AntminerResetModule.debug}",
               "createOptions": {}
             }
           }
@@ -78,9 +68,7 @@
       "properties.desired": {
         "schemaVersion": "1.1",
         "routes": {
-          "SampleModuleToIoTHub": "FROM /messages/modules/SampleModule/outputs/* INTO $upstream",
-          "sensorToSampleModule": "FROM /messages/modules/SimulatedTemperatureSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\"/modules/SampleModule/inputs/input1\")"
-        },
+          "AntminerResetModuleToIoTHub": "FROM /messages/modules/AntminerResetModule/outputs/* INTO $upstream"        },
         "storeAndForwardConfiguration": {
           "timeToLiveSecs": 7200
         }

@@ -1,3 +1,4 @@
 config/
 .env
+modules/AntminerResetModule/PSCreds_.xml
 modules/SampleModule/PSCreds_.xml

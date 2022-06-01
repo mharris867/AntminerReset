@@ -1,4 +1,4 @@
-namespace SampleModule
+namespace AntminerResetModule
 {
     using System;
     using System.IO;
@@ -10,6 +10,7 @@ namespace SampleModule
     using System.Threading.Tasks;
     using Microsoft.Azure.Devices.Client;
     using Microsoft.Azure.Devices.Client.Transport.Mqtt;
+    using System.Diagnostics;
 
     class Program
     {
@@ -52,6 +53,11 @@ namespace SampleModule
 
             // Register callback to be called when a message is received by the module
             await ioTHubModuleClient.SetInputMessageHandlerAsync("input1", PipeMessage, ioTHubModuleClient);
+            // Run Powershell
+            //PowerShell ps = PowerShell.Create();
+            //ps.AddArgument()
+            Process.Start("pwsh", "SoftReset.ps1 -noninteractive");
+            
         }
 
         /// <summary>
@@ -71,7 +77,7 @@ namespace SampleModule
 
             byte[] messageBytes = message.GetBytes();
             string messageString = Encoding.UTF8.GetString(messageBytes);
-            Console.WriteLine($"Received message: {counterValue}, Body: [{messageString}] Version 0.0.2");
+            Console.WriteLine($"Received message: {counterValue}, Body: [{messageString}]");
 
             if (!string.IsNullOrEmpty(messageString))
             {
@@ -82,8 +88,8 @@ namespace SampleModule
                         pipeMessage.Properties.Add(prop.Key, prop.Value);
                     }
                     await moduleClient.SendEventAsync("output1", pipeMessage);
-                
-                    Console.WriteLine("Received message sent Version: 0.0.2");
+
+                    Console.WriteLine("Received message sent");
                 }
             }
             return MessageResponse.Completed;
