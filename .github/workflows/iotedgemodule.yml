@@ -28,9 +28,6 @@ jobs:
         $creds | Export-CliXml -Path "./modules/AntminerResetModule/PSCreds_.xml"
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.13
-      with:
-        versionSpec: '6.x'
-        includePrerelease: true   
     - name: Determine Version
       id:   gitversion
       uses: gittools/actions/gitversion/execute@v0.9.13
