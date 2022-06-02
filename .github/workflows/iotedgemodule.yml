@@ -38,7 +38,7 @@ jobs:
       with:
         updateAssemblyInfo: true
     - name: List Variables
-      shell: powershell
+      shell: pwsh
       run: |
         Write-Host "Listing Available Environment Variables"
         get-childitem "env:"
