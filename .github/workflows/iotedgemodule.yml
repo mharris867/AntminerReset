@@ -37,7 +37,6 @@ jobs:
       id:   gitversion
       uses: gittools/actions/gitversion/execute@v0.9.13
       with:
-        updateprojectfiles: true
         updateAssemblyInfo: true
     - name: Display GitVersion outputs
       run: |
