@@ -37,9 +37,14 @@ jobs:
       uses: gittools/actions/gitversion/execute@v0.9.13
       with:
         updateAssemblyInfo: true
+    - name: List Variables
+      shell: powershell
+      run: |
+        Write-Host "Listing Available Environment Variables"
+        get-childitem "env:"
+        Write-Host "------------- End of Variable List -------------------"
     - name: Display GitVersion outputs
       run: |
-        echo "Major: ${{ major }}"
         echo "Major: ${{ steps.gitversion.outputs.major }}"
         echo "Minor: ${{ steps.gitversion.outputs.minor }}"
         echo "Patch: ${{ steps.gitversion.outputs.patch }}"
