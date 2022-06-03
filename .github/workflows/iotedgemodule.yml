@@ -43,40 +43,6 @@ jobs:
         Write-Host "Listing Available Environment Variables"
         get-childitem "env:"
         Write-Host "------------- End of Variable List -------------------"
-    - name: Display GitVersion outputs
-      run: |
-        echo "Major: ${{ steps.gitversion.outputs.major }}"
-        echo "Minor: ${{ steps.gitversion.outputs.minor }}"
-        echo "Patch: ${{ steps.gitversion.outputs.patch }}"
-        echo "PreReleaseTag: ${{ steps.gitversion.outputs.preReleaseTag }}"
-        echo "PreReleaseTagWithDash: ${{ steps.gitversion.outputs.preReleaseTagWithDash }}"
-        echo "PreReleaseLabel: ${{ steps.gitversion.outputs.preReleaseLabel }}"
-        echo "PreReleaseNumber: ${{ steps.gitversion.outputs.preReleaseNumber }}"
-        echo "WeightedPreReleaseNumber: ${{ steps.gitversion.outputs.weightedPreReleaseNumber }}"
-        echo "BuildMetaData: ${{ steps.gitversion.outputs.buildMetaData }}"
-        echo "BuildMetaDataPadded: ${{ steps.gitversion.outputs.buildMetaDataPadded }}"
-        echo "FullBuildMetaData: ${{ steps.gitversion.outputs.fullBuildMetaData }}"
-        echo "MajorMinorPatch: ${{ steps.gitversion.outputs.majorMinorPatch }}"
-        echo "SemVer: ${{ steps.gitversion.outputs.semVer }}"
-        echo "LegacySemVer: ${{ steps.gitversion.outputs.legacySemVer }}"
-        echo "LegacySemVerPadded: ${{ steps.gitversion.outputs.legacySemVerPadded }}"
-        echo "AssemblySemVer: ${{ steps.gitversion.outputs.assemblySemVer }}"
-        echo "AssemblySemFileVer: ${{ steps.gitversion.outputs.assemblySemFileVer }}"
-        echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
-        echo "InformationalVersion: ${{ steps.gitversion.outputs.informationalVersion }}"
-        echo "BranchName: ${{ steps.gitversion.outputs.branchName }}"
-        echo "EscapedBranchName: ${{ steps.gitversion.outputs.escapedBranchName }}"
-        echo "Sha: ${{ steps.gitversion.outputs.sha }}"
-        echo "ShortSha: ${{ steps.gitversion.outputs.shortSha }}"
-        echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
-        echo "NuGetVersion: ${{ steps.gitversion.outputs.nuGetVersion }}"
-        echo "NuGetPreReleaseTagV2: ${{ steps.gitversion.outputs.nuGetPreReleaseTagV2 }}"
-        echo "NuGetPreReleaseTag: ${{ steps.gitversion.outputs.nuGetPreReleaseTag }}"
-        echo "VersionSourceSha: ${{ steps.gitversion.outputs.versionSourceSha }}"
-        echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.commitsSinceVersionSource }}"
-        echo "CommitsSinceVersionSourcePadded: ${{ steps.gitversion.outputs.commitsSinceVersionSourcePadded }}"
-        echo "UncommittedChanges: ${{ steps.gitversion.outputs.uncommittedChanges }}"
-        echo "CommitDate: ${{ steps.gitversion.outputs.commitDate }}"
     - name: Set Version number
       shell: pwsh
       run: |
@@ -104,10 +70,10 @@ jobs:
       run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:${{ env.VERSION_INFO }}-arm32v7.debug "./modules/AntminerResetModule" && docker push mharris867/antminerresetmodule:${{ env.VERSION_INFO }}-arm32v7.debug
     - name: Generate IoT Edge Deployment Manifiest
       run: iotedgedev genconfig -f ./deployment.debug.template.json -P arm32v7 --fail-on-validation-error
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+    - name: Create release with GitReleaseManager
+      uses: gittools/actions/gitreleasemanager/create@v0.9.13
       with:
-        name: Upload Artifacts
-        path: |
+        name: ${{ GitVersion.InformationalVersion }}
+        assets: |
           **/module.json
           config/*.*
