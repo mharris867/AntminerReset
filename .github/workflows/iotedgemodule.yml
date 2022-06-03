@@ -73,7 +73,7 @@ jobs:
     - name: Create release with GitReleaseManager
       uses: gittools/actions/gitreleasemanager/create@v0.9.13
       with:
-        name: ${{ GitVersion_InformationalVersion }}
+        name: ${{ env.GitVersion_InformationalVersion }}
         assets: |
           **/module.json
           config/*.*
