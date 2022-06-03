@@ -74,8 +74,8 @@ jobs:
       uses: gittools/actions/gitreleasemanager/create@v0.9.13
       with:
         name: "${{ env.GitVersion_InformationalVersion }}"
-        owner: "mharris867"
-        repository: "${{ env.GITHUB_REPOSITORY }}"
+        owner: "${{ github.owner }}"
+        repository: "${{ github.repository }}"
         assets: |
           **/module.json
           config/*.*
