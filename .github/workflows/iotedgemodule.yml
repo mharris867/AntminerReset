@@ -86,5 +86,4 @@ jobs:
         owner: "mharris867"
         targetcommitish: "gitversion"
         repository: "AntminerReset"
-        assets: |
-          config/*.*
+        assets: modules/module.json config/deployment.debug.arm32v7.json
