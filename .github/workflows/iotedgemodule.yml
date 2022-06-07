@@ -87,5 +87,4 @@ jobs:
         targetcommitish: "gitversion"
         repository: "AntminerReset"
         assets: |
-          **/module.json
           config/*.*
