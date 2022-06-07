@@ -79,11 +79,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         isPreRelease: "true"
-        inputFilePath: ".github/release.yml"
-        name: 'v0.0.1'
+        name: 'v0.0.0'
         owner: "mharris867"
         targetcommitish: "gitversion"
         repository: "AntminerReset"
-        assets: |
-          **/module.json
-          config/*.*
