@@ -81,7 +81,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         milestone: "0.0.0"
-        isPreRelease: "true"
+        isPreRelease: 'true'
         name: "0.0.1"
         owner: "mharris867"
         targetcommitish: "gitversion"
