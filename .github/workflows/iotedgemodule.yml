@@ -94,4 +94,5 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         tagName: "0.0.1"
+        owner: "mharris867"
         repository: "AntminerReset"
