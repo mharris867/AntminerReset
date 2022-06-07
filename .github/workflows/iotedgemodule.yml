@@ -78,6 +78,10 @@ jobs:
       uses: gittools/actions/gitreleasemanager/create@v0.9.13
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        tagName: "0.0.1"
+        name: "0.0.1"
+        milestone: '0.0.1'
         owner: "mharris867"
         repository: "antmierreset"
+        assets: |
+          **/module.json
+          config/*.*
