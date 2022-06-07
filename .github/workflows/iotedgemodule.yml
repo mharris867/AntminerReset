@@ -79,7 +79,6 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         isPreRelease: "true"
-        inputFilePath: ""
         name: 'v0.0.1'
         owner: "mharris867"
         targetcommitish: "gitversion"
