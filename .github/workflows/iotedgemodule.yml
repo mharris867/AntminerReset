@@ -80,14 +80,14 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         tagName: "0.0.1"
         owner: "mharris867"
-        repository: AntminerReset
+        repository: "AntminerReset"
     - name: Add asset to a release with GitReleaseManager
       uses: gittools/actions/gitreleasemanager/addasset@v0.9.13
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         tagName: "0.0.1"
         owner: "mharris867"
-        repository: AntminerReset
+        repository: "AntminerReset"
         assets: |
           **/module.json
           config/*.*
