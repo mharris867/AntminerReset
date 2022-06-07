@@ -78,6 +78,6 @@ jobs:
       uses: gittools/actions/gitreleasemanager/publish@v0.9.13
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        tagName: "v0.0.1"
-        owner: "mharris867"
-        repository: "AntminerReset"
+        tagName: '0.0.1'
+        owner: 'mharris867'
+        repository: 'AntminerReset'
