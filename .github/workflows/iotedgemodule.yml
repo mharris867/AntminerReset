@@ -78,7 +78,7 @@ jobs:
       uses: gittools/actions/gitreleasemanager/create@v0.9.13
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        name: "0.0.1"
+        tagName: "0.0.1"
         owner: "mharris867"
         repository: "antmierreset"
         assets: |
