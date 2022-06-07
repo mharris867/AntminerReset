@@ -74,10 +74,12 @@ jobs:
       uses: gittools/actions/gitreleasemanager/setup@v0.9.13
       with:
         versionSpec: '0.10.x'
-    - name: Publish release with GitReleaseManager
-      uses: gittools/actions/gitreleasemanager/publish@v0.9.13
+    - name: Create release with GitReleaseManager
+      uses: gittools/actions/gitreleasemanager/create@v0.9.13
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        tagName: '0.0.1'
-        owner: 'mharris867'
-        repository: 'AntminerReset'
+        isPreRelease: "true"
+        name: "0.0.1"
+        owner: "mharris867"
+        targetcommitish: "gitversion"
+        repository: "AntminerReset"
