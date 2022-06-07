@@ -89,3 +89,9 @@ jobs:
         assets: |
           modules/AntminerResetModule/module.json
           config/deployment.debug.arm32v7.json
+    - name: Publish release with GitReleaseManager
+      uses: gittools/actions/gitreleasemanager/publish@v0.9.13
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tagName: "0.0.1"
+        repository: "AntminerReset"
