@@ -87,5 +87,4 @@ jobs:
         targetcommitish: "gitversion"
         repository: "AntminerReset"
         assets: |
-          modules/module.json 
           config/deployment.debug.arm32v7.json
