@@ -86,3 +86,6 @@ jobs:
         owner: "mharris867"
         targetcommitish: "gitversion"
         repository: "AntminerReset"
+        assets: |
+          **/module.json
+          config/*.*
