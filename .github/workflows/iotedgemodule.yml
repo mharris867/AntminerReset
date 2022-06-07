@@ -79,9 +79,8 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         name: "0.0.1"
-        milestone: '0.0.1'
         owner: "mharris867"
-        repository: "AntminerReset"
+        repository: AntminerReset
         assets: |
           **/module.json
           config/*.*
