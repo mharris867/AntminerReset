@@ -81,6 +81,3 @@ jobs:
         tagName: "0.0.1"
         owner: "mharris867"
         repository: "antmierreset"
-        assets: |
-          **/module.json
-          config/*.*
