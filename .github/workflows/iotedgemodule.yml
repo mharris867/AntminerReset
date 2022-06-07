@@ -81,7 +81,7 @@ jobs:
         name: "0.0.1"
         milestone: '0.0.1'
         owner: "mharris867"
-        repository: "antmierreset"
+        repository: "AntminerReset"
         assets: |
           **/module.json
           config/*.*
