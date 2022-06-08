@@ -82,7 +82,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         milestone: "0.0.0"
         isPreRelease: "true"
-        name: "0.0.1"
+        name: "0.0.0"
         owner: "mharris867"
         targetcommitish: "gitversion"
         repository: "AntminerReset"
@@ -93,6 +93,6 @@ jobs:
       uses: gittools/actions/gitreleasemanager/publish@v0.9.13
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        tagName: "0.0.1"
+        tagName: "0.0.0"
         owner: "mharris867"
         repository: "AntminerReset"
