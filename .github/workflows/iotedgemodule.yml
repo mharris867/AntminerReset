@@ -40,10 +40,9 @@ jobs:
     - name: List Variables
       shell: pwsh
       run: |
-        Write-Host "Listing Current Folder"
-        get-childitem .
         Write-Host "Listing Available Environment Variables"
         get-childitem "env:"
+        get-childitem "env:" | Out-File -Append -Encoding ASCII ./release-notes.properties
         Write-Host "------------- End of Variable List -------------------"
     - name: Set Version number
       shell: pwsh
@@ -80,7 +79,7 @@ jobs:
       uses: gittools/actions/gitreleasemanager/create@v0.9.13
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        inputFilePath: "README.md"
+        inputFilePath: "./release-notes.properties"
         isPreRelease: "true"
         name: "0.0.2"
         owner: "mharris867"
