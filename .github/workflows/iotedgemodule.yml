@@ -80,6 +80,7 @@ jobs:
       uses: gittools/actions/gitreleasemanager/create@v0.9.13
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+        inputFilePath: "README.md"
         isPreRelease: "true"
         name: "0.0.2"
         owner: "mharris867"
