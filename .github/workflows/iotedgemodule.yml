@@ -71,27 +71,16 @@ jobs:
       run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:${{ env.VERSION_INFO }}-arm32v7.debug "./modules/AntminerResetModule" && docker push mharris867/antminerresetmodule:${{ env.VERSION_INFO }}-arm32v7.debug
     - name: Generate IoT Edge Deployment Manifiest
       run: iotedgedev genconfig -f ./deployment.debug.template.json -P arm32v7 --fail-on-validation-error
-    - name: Install GitReleaseManager
-      uses: gittools/actions/gitreleasemanager/setup@v0.9.13
-      with:
-        versionSpec: '0.10.x'
-    - name: Create release with GitReleaseManager
-      uses: gittools/actions/gitreleasemanager/create@v0.9.13
+    - name: Create Release
+      uses: ncipollo/release-action@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        inputFilePath: "/home/pi/actions-runner/_work/AntminerReset/AntminerReset/release-notes.properties"
-        isPreRelease: "true"
-        name: "0.0.2"
+        generateReleaseNotes: "true"
+        prerelease: "true"
+        tag: "0.0.2"
+        name: "v0.0.2"
         owner: "mharris867"
-        targetcommitish: "gitversion"
+        commit: ${{ env.GITHUB_SHA }} 
         repository: "AntminerReset"
-        assets: |
-          modules/AntminerResetModule/module.json
-          config/deployment.debug.arm32v7.json
-    - name: Publish release with GitReleaseManager
-      uses: gittools/actions/gitreleasemanager/publish@v0.9.13
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        tagName: "0.0.2"
-        owner: "mharris867"
-        repository: "AntminerReset"
+        artifacts: "**/module.json,config/*.*"
+
