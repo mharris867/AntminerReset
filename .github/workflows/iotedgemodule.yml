@@ -17,8 +17,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-       fetch-depth: 0
-    - uses: actions/setup-dotnet@v2 # dotnet is only required for gitversion, This could be done in a container later
+       fetch-depth: 0 # Required for getversion
+    - uses: actions/setup-dotnet@v2 # required for gitversion, This could be done in a container later
       with:
         dotnet-version: '3.1.x'
     - name: Create Credential File
@@ -64,7 +64,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         generateReleaseNotes: "true"
-        prerelease: ${{ env.Prerelease }}
+        prerelease: ${{ env.prerelease }}
         tag: ${{ env.GITVERSION_SEMVER }}
         name: ${{ env.GITVERSION_INFORMATIONALVERSION }}
         owner: ${{ env.GITHUB_REPOSITORY_OWNER }}
