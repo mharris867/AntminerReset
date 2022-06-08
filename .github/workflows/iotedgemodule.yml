@@ -42,7 +42,6 @@ jobs:
       run: |
         Write-Host "Listing Available Environment Variables"
         get-childitem "env:"
-        get-childitem "env:" | Out-File -Append -Encoding ASCII ./release-notes.properties
         Write-Host "------------- End of Variable List -------------------"
     - name: Set Version number
       shell: pwsh
@@ -81,6 +80,5 @@ jobs:
         name: "v0.0.2"
         owner: "mharris867"
         commit: ${{ env.GITHUB_SHA }} 
-        repository: "AntminerReset"
         artifacts: "**/module.json,config/*.*"
 
