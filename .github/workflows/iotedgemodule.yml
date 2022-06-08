@@ -3,8 +3,9 @@ name: Build IoT Edge Module
 on:
   push:
     branches:
-     - master
-     - develop
+      - main
+      - master
+      - develop
   pull_request:
   workflow_dispatch:
 
@@ -15,6 +16,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+       fetch-depth: 0 # Required for getversion
+    - uses: actions/setup-dotnet@v2 # required for gitversion, This could be done in a container later
+      with:
+        dotnet-version: '3.1.x'
     - name: Create Credential File
       env:
         PWORD: ${{ secrets.PWORD }}
@@ -24,37 +30,44 @@ jobs:
         $PWord = ConvertTo-SecureString -String "${env:PWORD}" -AsPlainText -Force
         $creds = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
         $creds | Export-CliXml -Path "./modules/AntminerResetModule/PSCreds_.xml"
-    - name: Set Version number
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.13
+      with:
+        versionSpec: '5.x'
+    - name: Determine Version
+      uses: gittools/actions/gitversion/execute@v0.9.13
+      with:
+        updateAssemblyInfo: true
+    - name: List Variables
       shell: pwsh
       run: |
-        $MajorVersion = 1
-        $MinorVersion = 0
-        $SpanFromY2K = New-TimeSpan -Start (Get-Date "1/1/2000 12:00 AM") -End (Get-Date)
-        $SubMajor = $SpanFromY2K.Days
-        $CurrDay = New-TimeSpan -Start (Get-Date -Hour 0 -Minute 00 -Second 00) -End (Get-Date)
-        [int]$SubMinor = $CurrDay.TotalSeconds / 2
-        if ($env:GITHUB_REF_NAME -Like '*master*') {Add-Content -Path $env:GITHUB_ENV -Value "VERSION_INFO=$MajorVersion.$MinorVersion.$SubMajor.$SubMinor"}
-        else {
-        $prereleasesuffix = $env:GITHUB_REF_NAME.Substring($env:GITHUB_REF_NAME.LastIndexOf("/") + 1).Replace("_", "-").Replace(".", "-")
-        $prereleasesuffix = $prereleasesuffix.Substring(0, [System.Math]::Min(19, $prereleasesuffix.Length))
-        Add-Content -Path $env:GITHUB_ENV -Value "VERSION_INFO=$MajorVersion.$MinorVersion.$SubMajor.$SubMinor-$prereleasesuffix"
-        }
-        $module = (get-content ./modules/AntminerResetModule/module.json | ConvertFrom-Json)
-        $module.image.tag.version = "$MajorVersion.$MinorVersion.$SubMajor.$SubMinor"
-        $module | ConvertTo-Json -Depth 100 | set-content ./modules/AntminerResetModule/module.json
-        Write-Host "Version Set To: $MajorVersion.$MinorVersion.$SubMajor.$SubMinor"
+        Write-Host "Listing Available Environment Variables"
+        get-childitem "env:"
+        Write-Host "------------- End of Variable List -------------------"
+    - name: Set Release RC
+      shell: pwsh
+      run: |
+        if ($env:GITHUB_REF_NAME -Like '*master*' -or $env:GITHUB_REF_NAME -Like '*main*' ) {$prerelease = "true"}
+        else {$prerelease = "true"}
+        Add-Content -Path $env:GITHUB_ENV -Value "prerelease=$prerelease"
+        Write-Host "Pre-release Set To: $prerelease"
     - name: Build IoT Edge Solution PR
       if: ${{ github.event_name == 'pull_request' }}
-      run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t localhost:5000/antminerresetmodule:${{ env.VERSION_INFO }}-arm32v7.debug "./modules/AntminerResetModule" && docker push localhost:5000/antminerresetmodule:${{ env.VERSION_INFO }}-arm32v7.debug
+      run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t localhost:5000/antminerresetmodule:${{ env.GITVERSION_SEMVER }}-arm32v7.debug "./modules/AntminerResetModule" && docker push localhost:5000/antminerresetmodule:${{ env.GITVERSION_SEMVER }}-arm32v7.debug
     - name: Build IoT Edge Solution
       if: ${{ contains(github.ref, 'master') || contains(github.ref, 'develop') }}
-      run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:${{ env.VERSION_INFO }}-arm32v7.debug "./modules/AntminerResetModule" && docker push mharris867/antminerresetmodule:${{ env.VERSION_INFO }}-arm32v7.debug
+      run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:${{ env.GITVERSION_SEMVER }}-arm32v7.debug "./modules/AntminerResetModule" && docker push mharris867/antminerresetmodule:${{ env.GITVERSION_SEMVER }}-arm32v7.debug
     - name: Generate IoT Edge Deployment Manifiest
       run: iotedgedev genconfig -f ./deployment.debug.template.json -P arm32v7 --fail-on-validation-error
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+    - name: Create Release
+      uses: ncipollo/release-action@v1
       with:
-        name: Upload Artifacts
-        path: |
-          **/module.json
-          config/*.*
+        token: ${{ secrets.GITHUB_TOKEN }}
+        generateReleaseNotes: "true"
+        prerelease: ${{ env.prerelease }}
+        tag: ${{ env.GITVERSION_SEMVER }}
+        name: ${{ env.GITVERSION_INFORMATIONALVERSION }}
+        owner: ${{ env.GITHUB_REPOSITORY_OWNER }}
+        commit: ${{ env.GITHUB_SHA }} 
+        artifacts: "**/module.json,config/*.*"
+
