@@ -55,7 +55,7 @@ jobs:
       if: ${{ github.event_name == 'pull_request' }}
       run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t localhost:5000/antminerresetmodule:${{ env.GITVERSION_SEMVER }}-arm32v7.debug "./modules/AntminerResetModule" && docker push localhost:5000/antminerresetmodule:${{ env.GITVERSION_SEMVER }}-arm32v7.debug
     - name: Build IoT Edge Solution
-      if: ${{ contains(github.ref, 'master') || contains(github.ref, 'develop') }}
+      if: ${{ contains(github.ref, 'master') || contains(github.ref, 'develop') || contains(github.ref, 'main')}}
       run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.arm32v7.debug" -t mharris867/antminerresetmodule:${{ env.GITVERSION_SEMVER }}-arm32v7.debug "./modules/AntminerResetModule" && docker push mharris867/antminerresetmodule:${{ env.GITVERSION_SEMVER }}-arm32v7.debug
     - name: Generate IoT Edge Deployment Manifiest
       run: iotedgedev genconfig -f ./deployment.debug.template.json -P arm32v7 --fail-on-validation-error
