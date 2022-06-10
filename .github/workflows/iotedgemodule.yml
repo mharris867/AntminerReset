@@ -25,7 +25,7 @@ jobs:
     - uses: actions/checkout@v3
       with:
        fetch-depth: 0 # Required for getversion
-    - uses: actions/setup-dotnet@v2 # required for gitversion, This could be done in a container later
+    - uses: actions/setup-dotnet@v2 # required for gitversion, This could be done in a container later to reduce the number of software dependencies on the host since it is only for versioning
       with:
         dotnet-version: '3.1.x'
     - name: Create Credential File
@@ -64,7 +64,7 @@ jobs:
     - name: Build IoT Edge Solution
       if: ${{ contains(github.ref, 'master') || contains(github.ref, 'develop') || contains(github.ref, 'main')}}
       run: docker build  --rm -f "./modules/AntminerResetModule/Dockerfile.${{ matrix.TARGET }}.debug" -t mharris867/antminerresetmodule:${{ env.GITVERSION_SEMVER }}-${{ matrix.TARGET }}.debug "./modules/AntminerResetModule" && docker push mharris867/antminerresetmodule:${{ env.GITVERSION_SEMVER }}-${{ matrix.TARGET }}.debug
-    - name: Generate IoT Edge Deployment Manifiest
+    - name: Generate IoT Edge Deployment Manifiest # This should be done in the build container later to reduce the number of software dependencies on the host
       run: iotedgedev genconfig -f ./deployment.debug.template.json -P ${{ matrix.TARGET }} --fail-on-validation-error
     - name: Create Release
       uses: ncipollo/release-action@v1
